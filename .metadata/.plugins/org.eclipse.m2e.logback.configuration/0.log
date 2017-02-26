@@ -1,0 +1,27 @@
+2017-02-26 22:59:46,098 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: io.dropwizard:dropwizard-example:1.2.0-SNAPSHOT @ C:\Users\yzhang\restful\dropwizard-example\pom.xml.
+2017-02-26 22:59:47,420 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /dropwizard-example/src/main/java
+2017-02-26 22:59:47,421 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /dropwizard-example/src/main/resources
+2017-02-26 22:59:47,434 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /dropwizard-example/src/test/java
+2017-02-26 22:59:47,434 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /dropwizard-example/src/test/resources
+2017-02-26 22:59:47,657 [Worker-8] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 2 sec
+2017-02-26 22:59:49,262 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 22:59:49,266 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 10 resources
+2017-02-26 22:59:49,304 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 22:59:49,305 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-02-26 23:06:28,036 [Worker-13] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Collecting project info '/pom.xml' C:\Users\yzhang\restful\bank\pom.xml
+2017-02-26 23:06:28,347 [Worker-13] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.aprilsulu:bank:0.0.1-SNAPSHOT @ C:\Users\yzhang\restful\bank\pom.xml.
+2017-02-26 23:06:28,639 [Worker-13] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /bank/src/main/java
+2017-02-26 23:06:28,644 [Worker-13] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /bank/src/test/java
+2017-02-26 23:06:28,694 [Worker-13] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 0 sec
+2017-02-26 23:06:28,976 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 23:06:28,979 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\yzhang\restful\bank\src\main\resources
+2017-02-26 23:06:28,980 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 23:06:28,980 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\yzhang\restful\bank\src\test\resources
+2017-02-26 23:06:47,521 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 23:06:47,527 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-02-26 23:06:47,532 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 23:06:47,536 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-02-26 23:09:52,608 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 23:09:52,611 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-02-26 23:09:52,616 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-02-26 23:09:52,619 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
