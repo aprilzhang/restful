@@ -12,3 +12,185 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2017-02-26 23:17:49.590 -----------------------------------------------
+eclipse.buildId=4.6.0.I20160606-1100
+java.version=1.8.0_121
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-02-26 23:17:57.508
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\yzhang'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:44.604
+!MESSAGE The POM for io.dropwizard:dropwizard-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:45.399
+!MESSAGE The POM for io.dropwizard:dropwizard-auth:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:46.336
+!MESSAGE The POM for io.dropwizard:dropwizard-assets:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:47.336
+!MESSAGE The POM for io.dropwizard:dropwizard-http2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:48.259
+!MESSAGE The POM for io.dropwizard:dropwizard-hibernate:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:49.230
+!MESSAGE The POM for io.dropwizard:dropwizard-migrations:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:50.194
+!MESSAGE The POM for io.dropwizard:dropwizard-views-freemarker:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:51.218
+!MESSAGE The POM for io.dropwizard:dropwizard-views-mustache:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:52.144
+!MESSAGE The POM for io.dropwizard:dropwizard-metrics-graphite:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:52.986
+!MESSAGE The POM for com.h2database:h2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:53.833
+!MESSAGE The POM for io.dropwizard:dropwizard-testing:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:54.679
+!MESSAGE The POM for org.mockito:mockito-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:55.694
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:27:56.613
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.695
+!MESSAGE The POM for io.dropwizard:dropwizard-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.708
+!MESSAGE The POM for io.dropwizard:dropwizard-auth:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.713
+!MESSAGE The POM for io.dropwizard:dropwizard-assets:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.717
+!MESSAGE The POM for io.dropwizard:dropwizard-http2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.722
+!MESSAGE The POM for io.dropwizard:dropwizard-hibernate:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.730
+!MESSAGE The POM for io.dropwizard:dropwizard-migrations:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.735
+!MESSAGE The POM for io.dropwizard:dropwizard-views-freemarker:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.740
+!MESSAGE The POM for io.dropwizard:dropwizard-views-mustache:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.745
+!MESSAGE The POM for io.dropwizard:dropwizard-metrics-graphite:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.750
+!MESSAGE The POM for com.h2database:h2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.755
+!MESSAGE The POM for io.dropwizard:dropwizard-testing:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.761
+!MESSAGE The POM for org.mockito:mockito-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.768
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:03.778
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.239
+!MESSAGE The POM for io.dropwizard:dropwizard-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.246
+!MESSAGE The POM for io.dropwizard:dropwizard-auth:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.251
+!MESSAGE The POM for io.dropwizard:dropwizard-assets:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.256
+!MESSAGE The POM for io.dropwizard:dropwizard-http2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.260
+!MESSAGE The POM for io.dropwizard:dropwizard-hibernate:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.267
+!MESSAGE The POM for io.dropwizard:dropwizard-migrations:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.271
+!MESSAGE The POM for io.dropwizard:dropwizard-views-freemarker:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.276
+!MESSAGE The POM for io.dropwizard:dropwizard-views-mustache:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.280
+!MESSAGE The POM for io.dropwizard:dropwizard-metrics-graphite:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.286
+!MESSAGE The POM for com.h2database:h2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.291
+!MESSAGE The POM for io.dropwizard:dropwizard-testing:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.295
+!MESSAGE The POM for org.mockito:mockito-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.299
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:28:59.304
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.670
+!MESSAGE The POM for io.dropwizard:dropwizard-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.675
+!MESSAGE The POM for io.dropwizard:dropwizard-auth:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.679
+!MESSAGE The POM for io.dropwizard:dropwizard-assets:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.687
+!MESSAGE The POM for io.dropwizard:dropwizard-http2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.691
+!MESSAGE The POM for io.dropwizard:dropwizard-hibernate:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.695
+!MESSAGE The POM for io.dropwizard:dropwizard-migrations:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.700
+!MESSAGE The POM for io.dropwizard:dropwizard-views-freemarker:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.708
+!MESSAGE The POM for io.dropwizard:dropwizard-views-mustache:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.714
+!MESSAGE The POM for io.dropwizard:dropwizard-metrics-graphite:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.719
+!MESSAGE The POM for com.h2database:h2:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.726
+!MESSAGE The POM for io.dropwizard:dropwizard-testing:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.730
+!MESSAGE The POM for org.mockito:mockito-core:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.735
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:jar: is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-02-26 23:30:33.744
+!MESSAGE The POM for org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:jar: is missing, no dependency information available
