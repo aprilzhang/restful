@@ -1,0 +1,53 @@
+package com.aprilsulu.bank.resources;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import com.aprilsulu.bank.core.Transaction;
+import com.aprilsulu.bank.db.TransactionDAO;
+
+import io.dropwizard.hibernate.UnitOfWork;
+
+@Path("/transactions")
+@Produces(MediaType.APPLICATION_JSON)
+public class TransactionResource {
+	private final TransactionDAO transactionDAO;
+
+	public TransactionResource(final TransactionDAO transactionDAO) {
+		this.transactionDAO = transactionDAO;
+	}
+
+	@POST
+	@UnitOfWork
+	public Transaction createTransaction(final Transaction account) {
+		return transactionDAO.create(account);
+	}
+
+	@GET
+	@UnitOfWork
+	public List<Transaction> listTransactions() {
+		return transactionDAO.findAll();
+	}
+
+	@GET
+	@Path("/transactions/{transactionid}")
+	@UnitOfWork
+	public Optional<Transaction> getAccount(@PathParam("transactionid") final long transactionid) {
+		return transactionDAO.findById(transactionid);
+	}
+
+	@OPTIONS
+	@Path("/transactions")
+	@Produces(MediaType.APPLICATION_XML)
+	public String getSupportedOperations(){
+		return "<operations>GET, POST</operations>";
+	}
+}

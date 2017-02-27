@@ -1,0 +1,84 @@
+package com.aprilsulu.bank.resources;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.db.TransactionDAO;
+import com.aprilsulu.bank.resources.PersonResource;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import io.dropwizard.testing.junit.ResourceTestRule;
+
+/**
+ * Unit tests for {@link PersonResource}.
+ */
+public final class PersonResourceTest {
+
+	private static final TransactionDAO TRANSACTION_DAO = mock(TransactionDAO.class);
+	@ClassRule
+	public static final ResourceTestRule RESOURCES = ResourceTestRule.builder()
+	.addResource(new TransactionResource(TRANSACTION_DAO))
+	.setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+	.build();
+	private Account person;
+
+	@Before
+	public void setup() {
+		person = new Account();
+		person.setId(1L);
+	}
+
+	@After
+	public void tearDown() {
+		reset(DAO);
+	}
+
+	@Test
+	public void getPersonSuccess() {
+		when(DAO.findById(1L)).thenReturn(Optional.of(person));
+
+		final Account found = RULE.target("/people/1").request().get(Account.class);
+
+		assertThat(found.getId()).isEqualTo(person.getId());
+		verify(DAO).findById(1L);
+	}
+
+	@Test
+	public void getPersonNotFound() {
+		when(DAO.findById(2L)).thenReturn(Optional.empty());
+		final Response response = RULE.target("/people/2").request().get();
+
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+		verify(DAO).findById(2L);
+	}
+
+
+	@Test
+	public void createAccount() throws JsonProcessingException {
+		when(ACCOUNT_DAO.create(any(Account.class))).thenReturn(account);
+		final Response response = RESOURCES.target("/accounts")
+				.request(MediaType.APPLICATION_JSON_TYPE)
+				.post(Entity.entity(account, MediaType.APPLICATION_JSON_TYPE));
+
+		assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
+		verify(ACCOUNT_DAO).create(accountCaptor.capture());
+		assertThat(accountCaptor.getValue()).isEqualTo(account);
+	}
+}

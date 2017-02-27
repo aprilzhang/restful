@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TransactionResourceTest" project="bank-example" tests="4" started="4" failures="1" errors="1" ignored="0">
+  <testsuite name="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.773">
+    <testcase name="createTransaction" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.661">
+      <failure>
+        <expected>OK</expected>
+        <actual>Not Found</actual>org.junit.ComparisonFailure: expected:&lt;[OK]&gt; but was:&lt;[Not Found]&gt;&#13;
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)&#13;
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)&#13;
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)&#13;
+	at com.aprilsulu.bank.resources.TransactionResourceTest.createTransaction(TransactionResourceTest.java:101)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at io.dropwizard.testing.junit.ResourceTestRule$1.evaluate(ResourceTestRule.java:198)&#13;
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="listTransactions" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.093"/>
+    <testcase name="getTransactionNotFound" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.009"/>
+    <testcase name="getTransactionSuccess" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.009">
+      <error>javax.ws.rs.client.ResponseProcessingException: com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "fromAccountId" (class com.aprilsulu.bank.core.Account), not marked as ignorable (2 known properties: "id", "balance"])
+ at [Source: org.glassfish.jersey.message.internal.ReaderInterceptorExecutor$UnCloseableInputStream@56ac5c80; line: 1, column: 26] (through reference chain: com.aprilsulu.bank.core.Account["fromAccountId"])&#13;
+	at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:809)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation.access$700(JerseyInvocation.java:92)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$2.call(JerseyInvocation.java:701)&#13;
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)&#13;
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)&#13;
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:228)&#13;
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:444)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:697)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:420)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.get(JerseyInvocation.java:316)&#13;
+	at com.aprilsulu.bank.resources.TransactionResourceTest.getTransactionSuccess(TransactionResourceTest.java:65)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at io.dropwizard.testing.junit.ResourceTestRule$1.evaluate(ResourceTestRule.java:198)&#13;
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "fromAccountId" (class com.aprilsulu.bank.core.Account), not marked as ignorable (2 known properties: "id", "balance"])
+ at [Source: org.glassfish.jersey.message.internal.ReaderInterceptorExecutor$UnCloseableInputStream@56ac5c80; line: 1, column: 26] (through reference chain: com.aprilsulu.bank.core.Account["fromAccountId"])&#13;
+	at com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException.from(UnrecognizedPropertyException.java:62)&#13;
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnknownProperty(DeserializationContext.java:834)&#13;
+	at com.fasterxml.jackson.databind.deser.std.StdDeserializer.handleUnknownProperty(StdDeserializer.java:1093)&#13;
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.handleUnknownProperty(BeanDeserializerBase.java:1485)&#13;
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.handleUnknownVanilla(BeanDeserializerBase.java:1463)&#13;
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:246)&#13;
+	at com.fasterxml.jackson.module.afterburner.deser.SuperSonicBeanDeserializer.deserialize(SuperSonicBeanDeserializer.java:152)&#13;
+	at com.fasterxml.jackson.databind.ObjectReader._bind(ObjectReader.java:1583)&#13;
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:964)&#13;
+	at com.fasterxml.jackson.jaxrs.base.ProviderBase.readFrom(ProviderBase.java:815)&#13;
+	at org.glassfish.jersey.message.internal.ReaderInterceptorExecutor$TerminalReaderInterceptor.invokeReadFrom(ReaderInterceptorExecutor.java:256)&#13;
+	at org.glassfish.jersey.message.internal.ReaderInterceptorExecutor$TerminalReaderInterceptor.aroundReadFrom(ReaderInterceptorExecutor.java:235)&#13;
+	at org.glassfish.jersey.message.internal.ReaderInterceptorExecutor.proceed(ReaderInterceptorExecutor.java:155)&#13;
+	at org.glassfish.jersey.message.internal.MessageBodyFactory.readFrom(MessageBodyFactory.java:1085)&#13;
+	at org.glassfish.jersey.message.internal.InboundMessageContext.readEntity(InboundMessageContext.java:874)&#13;
+	at org.glassfish.jersey.message.internal.InboundMessageContext.readEntity(InboundMessageContext.java:808)&#13;
+	at org.glassfish.jersey.client.ClientResponse.readEntity(ClientResponse.java:326)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:806)&#13;
+	... 37 more&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

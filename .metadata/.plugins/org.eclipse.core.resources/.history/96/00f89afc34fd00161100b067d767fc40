@@ -1,0 +1,73 @@
+package com.aprilsulu.bank.db;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.Transaction;
+
+import io.dropwizard.testing.junit.DAOTestRule;
+
+public final class TransactionDAOTest {
+
+	@Rule
+	public DAOTestRule daoTestRule = DAOTestRule.newBuilder()
+	.addEntityClass(Transaction.class)
+	.build();
+
+	private TransactionDAO transactionDAO;
+
+	@Before
+	public void setUp() throws Exception {
+		transactionDAO = new TransactionDAO(daoTestRule.getSessionFactory());
+	}
+
+	@Test
+	public void createAccount() {
+		final Transaction transaction = daoTestRule.inTransaction(() ->
+		transactionDAO.create(new Transaction(1,3,200)));
+		assertThat(transaction.getId()).isGreaterThan(0);
+		assertThat(transaction.getFromAccountId()).isEqualTo(1);
+		assertThat(transaction.getToAccountId()).isEqualTo(3);
+		assertThat(transaction.getToAccountId()).isEqualTo(3);
+		assertThat(transaction.findById(account.getId())).isEqualTo(Optional.of(account));
+	}
+
+	@Test
+	public void updateBalance() {
+		final Account account = daoTestRule.inTransaction(() -> transactionDAO.create(new Account()));
+
+		final long id = account.getId();
+		assertThat(id).isGreaterThan(0);
+		assertThat(account.getBalance()).isEqualTo(0);
+		assertThat(transactionDAO.findById(account.getId())).isEqualTo(Optional.of(account));
+
+		final Account accountAfterUpdate = daoTestRule.inTransaction(() -> accountDAO.updateBalance(id,500));
+		assertThat(accountAfterUpdate.getId()).isEqualTo(id);
+		assertThat(accountAfterUpdate.getBalance()).isEqualTo(500);
+	}
+
+	@Test
+	public void findAll() {
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(new Account());
+			accountDAO.create(new Account());
+			accountDAO.create(new Account());
+		});
+
+		final List<Account> persons = transactionDAO.findAll();
+		assertThat(persons).extracting("balance").containsOnly("0.0", "0.0", "0.0");
+	}
+
+	@Test(expected = ConstraintViolationException.class)
+	public void handlesNullFullName() {
+		daoTestRule.inTransaction(() -> transactionDAO.create(new Account()));
+	}
+}

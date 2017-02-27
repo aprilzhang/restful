@@ -1,0 +1,105 @@
+package com.aprilsulu.bank;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.Transaction;
+
+import io.dropwizard.testing.ConfigOverride;
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit.DropwizardAppRule;
+
+public final class IntegrationTest {
+
+	private static final String TMP_FILE = createTempFile();
+	private static final String CONFIG_PATH = ResourceHelpers.resourceFilePath("test-example.yml");
+
+	@ClassRule
+	public static final DropwizardAppRule<BankConfiguration> RULE = new DropwizardAppRule<>(
+			BankApplication.class, CONFIG_PATH,
+			ConfigOverride.config("database.url", "jdbc:h2:" + TMP_FILE));
+
+	@BeforeClass
+	public static void migrateDb() throws Exception {
+		RULE.getApplication().run("db", "migrate", CONFIG_PATH);
+	}
+
+
+	@Test
+	public void testGetAccounts() throws Exception {
+		final List<Account> accounts = RULE.client().target("http://localhost:" + RULE.getLocalPort() + "/accounts")
+				.request()
+				.get(new GenericType<List<Account>>() {});
+		assertThat(accounts.get(2).getBalance()).isEqualTo(1809.19);
+	}
+
+	@Test
+	public void testGetIndividualAccount() throws Exception {
+		final Account account = RULE.client().target("http://localhost:" + RULE.getLocalPort() + "/accounts/1")
+				.request()
+				.get()
+				.readEntity(Account.class);
+		assertThat(account.getId()).isNotNull();
+		assertThat(account.getBalance()).isEqualTo(500.0);
+	}
+
+	@Test
+	public void testGetTransactions() throws Exception {
+		final List<Transaction> transactions = RULE.client().target("http://localhost:" + RULE.getLocalPort() + "/transactions")
+				.request()
+				.get(new GenericType<List<Transaction>>() {});
+		assertThat(transactions.isEmpty());
+	}
+
+	@Test
+	public void testGetInitialTransaction() throws Exception {
+		final Response response = RULE.client().target("http://localhost:" + RULE.getLocalPort() + "/transactions/1")
+				.request()
+				.get();
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+	}
+	@Test
+	public void testGetInitialTransaction() throws Exception {
+		final Response response = RULE.client().target("http://localhost:" + RULE.getLocalPort() + "/transactions/1")
+				.request()
+				.get();
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+	}
+
+
+	@Ignore
+	@Test
+	public void testPostTransaction() throws Exception {
+		final Transaction transaction = new Transaction(2,3,500);
+		final Transaction newTransaction = RULE.client().target("http://localhost:" + RULE.getLocalPort() + "/transactions")
+				.request()
+				.post(Entity.entity(transaction, MediaType.APPLICATION_JSON_TYPE))
+				.readEntity(Transaction.class);
+		assertThat(newTransaction.getId()).isNotNull();
+		assertThat(newTransaction.getFromAccountId()).isEqualTo(transaction.getFromAccountId());
+		assertThat(newTransaction.getToAccountId()).isEqualTo(transaction.getToAccountId());
+		assertThat(newTransaction.getAmount()).isEqualTo(transaction.getAmount());
+	}
+
+	private static String createTempFile() {
+		try {
+			return File.createTempFile("test", null).getAbsolutePath();
+		} catch (final IOException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+}

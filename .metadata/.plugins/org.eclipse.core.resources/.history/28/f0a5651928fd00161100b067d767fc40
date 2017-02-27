@@ -1,0 +1,57 @@
+package com.aprilsulu.bank.db;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import com.aprilsulu.bank.core.Account;
+
+import io.dropwizard.testing.junit.DAOTestRule;
+
+public final class AccountDAOTest {
+
+	@Rule
+	public DAOTestRule daoTestRule = DAOTestRule.newBuilder()
+	.addEntityClass(Account.class)
+	.build();
+
+	private AccountDAOTest accountDAO;
+
+	@Before
+	public void setUp() throws Exception {
+		accountDAO = new AccountDAOTest(daoTestRule.getSessionFactory());
+	}
+
+	@Test
+	public void createPerson() {
+		final Account jeff = daoTestRule.inTransaction(() -> personDAO.create(new Account()));
+		assertThat(jeff.getId()).isGreaterThan(0);
+		assertThat(jeff.getFullName()).isEqualTo("Jeff");
+		assertThat(jeff.getJobTitle()).isEqualTo("The plumber");
+		assertThat(personDAO.findById(jeff.getId())).isEqualTo(Optional.of(jeff));
+	}
+
+	@Test
+	public void findAll() {
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(new Account());
+			accountDAO.create(new Account());
+			accountDAO.create(new Account());
+		});
+
+		final List<Account> persons = accountDAO.findAll();
+		assertThat(persons).extracting("fullName").containsOnly("Jeff", "Jim", "Randy");
+		assertThat(persons).extracting("jobTitle").containsOnly("The plumber", "The cook", "The watchman");
+	}
+
+	@Test(expected = ConstraintViolationException.class)
+	public void handlesNullFullName() {
+		daoTestRule.inTransaction(() -> accountDAO.create(new Account()));
+	}
+}

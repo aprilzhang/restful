@@ -1,0 +1,96 @@
+package com.aprilsulu.bank;
+
+import java.util.Map;
+
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+
+import com.aprilsulu.bank.cli.RenderCommand;
+import com.aprilsulu.bank.core.Person;
+import com.aprilsulu.bank.core.Template;
+import com.aprilsulu.bank.core.User;
+import com.aprilsulu.bank.db.PersonDAO;
+import com.aprilsulu.bank.filter.DateRequiredFeature;
+import com.aprilsulu.bank.health.TemplateHealthCheck;
+import com.aprilsulu.bank.resources.FilteredResource;
+import com.aprilsulu.bank.resources.HelloWorldResource;
+import com.aprilsulu.bank.resources.PeopleResource;
+import com.aprilsulu.bank.resources.PersonResource;
+import com.aprilsulu.bank.resources.ProtectedResource;
+import com.aprilsulu.bank.resources.ViewResource;
+import com.aprilsulu.bank.tasks.EchoTask;
+
+import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
+
+public class BankApplication extends Application<BankConfiguration> {
+	public static void main(String[] args) throws Exception {
+		new BankApplication().run(args);
+	}
+
+	private final HibernateBundle<BankConfiguration> hibernateBundle =
+			new HibernateBundle<BankConfiguration>(Person.class) {
+		@Override
+		public DataSourceFactory getDataSourceFactory(BankConfiguration configuration) {
+			return configuration.getDataSourceFactory();
+		}
+	};
+
+	@Override
+	public String getName() {
+		return "bank";
+	}
+
+	@Override
+	public void initialize(Bootstrap<BankConfiguration> bootstrap) {
+		// Enable variable substitution with environment variables
+		bootstrap.setConfigurationSourceProvider(
+				new SubstitutingSourceProvider(
+						bootstrap.getConfigurationSourceProvider(),
+						new EnvironmentVariableSubstitutor(false)
+						)
+				);
+
+		bootstrap.addCommand(new RenderCommand());
+		bootstrap.addBundle(new AssetsBundle());
+		bootstrap.addBundle(new MigrationsBundle<BankConfiguration>() {
+			@Override
+			public DataSourceFactory getDataSourceFactory(BankConfiguration configuration) {
+				return configuration.getDataSourceFactory();
+			}
+		});
+		bootstrap.addBundle(hibernateBundle);
+		bootstrap.addBundle(new ViewBundle<BankConfiguration>() {
+			@Override
+			public Map<String, Map<String, String>> getViewConfiguration(BankConfiguration configuration) {
+				return configuration.getViewRendererConfiguration();
+			}
+		});
+	}
+
+	@Override
+	public void run(BankConfiguration configuration, Environment environment) {
+		final PersonDAO dao = new PersonDAO(hibernateBundle.getSessionFactory());
+		final Template template = configuration.buildTemplate();
+
+		environment.healthChecks().register("template", new TemplateHealthCheck(template));
+		environment.admin().addTask(new EchoTask());
+		environment.jersey().register(DateRequiredFeature.class);
+		environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+		environment.jersey().register(RolesAllowedDynamicFeature.class);
+		environment.jersey().register(new HelloWorldResource(template));
+		environment.jersey().register(new ViewResource());
+		environment.jersey().register(new ProtectedResource());
+		environment.jersey().register(new PeopleResource(dao));
+		environment.jersey().register(new PersonResource(dao));
+		environment.jersey().register(new FilteredResource());
+	}
+}

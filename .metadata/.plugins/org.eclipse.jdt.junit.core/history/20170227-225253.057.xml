@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TransactionResourceTest" project="bank-example" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.715">
+    <testcase name="createTransaction" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.672"/>
+    <testcase name="listTransactions" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.023"/>
+    <testcase name="getTransactionNotFound" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.008"/>
+    <testcase name="getTransactionSuccess" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.012"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,74 @@
+package com.aprilsulu.bank.core;
+
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "trancation")
+@NamedQueries(
+		{
+			@NamedQuery(
+					name = "com.aprilsulu.bank.core.Transaction.findAll",
+					query = "SELECT p FROM Transaction p"
+					)
+		}
+		)
+public class Transaction {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@Column(name = "fromId", nullable = false)
+	private long fromId;
+
+	@Column(name = "toId", nullable = false)
+	private long toId;
+
+	@Column(name = "amount", nullable = false)
+	private double amount;
+
+	public Transaction() {
+	}
+
+	public Transaction() {
+	}
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Account)
+		{
+			final Account that = (Account) o;
+			return this.id==that.id
+					&&Double.doubleToLongBits(this.balance)==Double.doubleToLongBits(that.balance);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, balance);
+	}
+}

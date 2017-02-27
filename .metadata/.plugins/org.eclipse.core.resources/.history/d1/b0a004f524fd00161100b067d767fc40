@@ -1,0 +1,27 @@
+package com.aprilsulu.bank.db;
+
+import io.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.SessionFactory;
+
+import com.aprilsulu.bank.core.Account;
+
+import java.util.List;
+import java.util.Optional;
+
+public class PersonDAO extends AbstractDAO<Account> {
+    public PersonDAO(SessionFactory factory) {
+        super(factory);
+    }
+
+    public Optional<Account> findById(Long id) {
+        return Optional.ofNullable(get(id));
+    }
+
+    public Account create(Account person) {
+        return persist(person);
+    }
+
+    public List<Account> findAll() {
+        return list(namedQuery("com.example.helloworld.core.Person.findAll"));
+    }
+}

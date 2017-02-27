@@ -1,0 +1,5 @@
+package com.aprilsulu.bank.core;
+
+public class Transaction {
+
+}

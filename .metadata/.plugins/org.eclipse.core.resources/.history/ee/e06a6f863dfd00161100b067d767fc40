@@ -1,0 +1,104 @@
+package com.aprilsulu.bank.resources;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+
+import com.aprilsulu.bank.core.Transaction;
+import com.aprilsulu.bank.db.TransactionDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.common.collect.ImmutableList;
+
+import io.dropwizard.testing.junit.ResourceTestRule;
+
+/**
+ * Unit tests for {@link TransactionResource}.
+ */
+public final class TransactionResourceTest {
+
+	private static final TransactionDAO TRANSACTION_DAO = mock(TransactionDAO.class);
+	@ClassRule
+	public static final ResourceTestRule RESOURCES = ResourceTestRule.builder()
+	.addResource(new TransactionResource(TRANSACTION_DAO))
+	.setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+	.build();
+
+	@Captor
+	private ArgumentCaptor<Transaction> transactionCaptor;
+
+	private Transaction transaction;
+
+	@Before
+	public void setup() {
+		transaction = new Transaction(1,3,200);
+	}
+
+	@After
+	public void tearDown() {
+		reset(TRANSACTION_DAO);
+	}
+
+	@Test
+	public void getTransactionSuccess() {
+		when(TRANSACTION_DAO.findById(1l)).thenReturn(Optional.of(transaction));
+
+		final Transaction found = RESOURCES.target("/transactions/1").request().get(Transaction.class);
+
+		assertThat(found.getId()).isEqualTo(transaction.getId());
+		verify(TRANSACTION_DAO).findById(1l);
+	}
+
+	@Test
+	public void getTransactionNotFound() {
+		when(TRANSACTION_DAO.findById(2l)).thenReturn(Optional.empty());
+		final Response response = RESOURCES.target("/transactions/2").request().get();
+
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+		verify(TRANSACTION_DAO).findById(2l);
+	}
+
+
+	@Test
+	public void listTransactions() throws Exception {
+		final ImmutableList<Transaction> transactions = ImmutableList.of(transaction);
+		when(TRANSACTION_DAO.findAll()).thenReturn(transactions);
+
+		final List<Transaction> response = RESOURCES.target("/transactions")
+				.request().get(new GenericType<List<Transaction>>() {});
+
+		verify(TRANSACTION_DAO).findAll();
+		assertThat(response).containsAll(transactions);
+	}
+
+
+	@Test
+	public void createTransaction() throws JsonProcessingException {
+		when(TRANSACTION_DAO.create(any(Transaction.class))).thenReturn(transaction);
+		final Response response = RESOURCES.target("/transactions")
+				.request(MediaType.APPLICATION_JSON_TYPE)
+				.post(Entity.entity(transaction, MediaType.APPLICATION_JSON_TYPE));
+
+		assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
+		verify(TRANSACTION_DAO).create(transactionCaptor.capture());
+		assertThat(transactionCaptor.getValue()).isEqualTo(transaction);
+	}
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TransactionDAOTest" project="bank-example" tests="3" started="3" failures="0" errors="0" ignored="1">
+  <testsuite name="com.aprilsulu.bank.db.TransactionDAOTest" time="0.193">
+    <testcase name="findAll" classname="com.aprilsulu.bank.db.TransactionDAOTest" time="0.184"/>
+    <testcase name="createAccount" classname="com.aprilsulu.bank.db.TransactionDAOTest" time="0.009"/>
+    <testcase name="handlesNullFullName" classname="com.aprilsulu.bank.db.TransactionDAOTest" time="0.0" ignored="true"/>
+  </testsuite>
+</testrun>

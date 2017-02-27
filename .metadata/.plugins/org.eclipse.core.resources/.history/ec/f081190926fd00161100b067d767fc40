@@ -1,0 +1,29 @@
+package com.aprilsulu.bank.db;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.SessionFactory;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.Transaction;
+
+import io.dropwizard.hibernate.AbstractDAO;
+
+public class TransacationDAO  extends AbstractDAO<Transaction> {
+	public TransacationDAO(SessionFactory factory) {
+		super(factory);
+	}
+
+	public Optional<Transaction> findById(Long id) {
+		return Optional.ofNullable(get(id));
+	}
+
+	public Transaction create(Transaction transaction) {
+		return persist(transaction);
+	}
+
+	public List<Account> findAll() {
+		return list(namedQuery("com.aprilsulu.bank.core.Transaction.findAll"));
+	}
+}

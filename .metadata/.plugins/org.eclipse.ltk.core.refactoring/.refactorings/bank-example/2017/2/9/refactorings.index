@@ -15,3 +15,38 @@
 1488151477469	Rename package 'com.example.helloworld'
 1488151487786	Rename package 'com.example.helloworld.db'
 1488151497315	Rename package 'com.example.helloworld.resources'
+1488220855740	Rename type 'HelloWorldApplication'
+1488221101548	Delete element
+1488221109208	Delete element
+1488221124394	Delete element
+1488221140492	Delete element
+1488221146440	Delete element
+1488221319845	Rename type 'HelloWorldConfiguration'
+1488221434891	Rename type 'Person'
+1488224585371	Rename type 'PersonDAO'
+1488225199652	Rename type 'PeopleResource'
+1488225237391	Rename field 'peopleDAO'
+1488225337327	Rename type 'TransacationDAO'
+1488225734244	Delete element
+1488227412088	Delete element
+1488227419759	Delete element
+1488227425306	Delete element
+1488227435676	Delete element
+1488227501585	Delete element
+1488227506862	Delete element
+1488227514153	Delete element
+1488227525350	Delete element
+1488228169422	Delete element
+1488228201275	Delete element
+1488228808150	Delete element
+1488228812812	Delete element
+1488228830025	Delete element
+1488228905838	Delete element
+1488228924526	Delete element
+1488228947378	Delete element
+1488228954120	Delete element
+1488231439767	Rename method 'getFromAcountId'
+1488232792581	Rename type 'PersonResourceTest'
+1488236454036	Delete element
+1488237062429	Delete element
+1488237081955	Delete element

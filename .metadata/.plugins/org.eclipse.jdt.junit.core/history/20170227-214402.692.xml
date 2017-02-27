@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TransactionDAOTest" project="bank-example" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.bank.db.TransactionDAOTest" time="0.195">
+    <testcase name="findAll" classname="com.aprilsulu.bank.db.TransactionDAOTest" time="0.186"/>
+    <testcase name="createAccount" classname="com.aprilsulu.bank.db.TransactionDAOTest" time="0.009"/>
+  </testsuite>
+</testrun>

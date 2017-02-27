@@ -1,0 +1,96 @@
+package com.aprilsulu.bank.core;
+
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "trancation")
+@NamedQueries(
+		{
+			@NamedQuery(
+					name = "com.aprilsulu.bank.core.Transaction.findAll",
+					query = "SELECT p FROM Transaction p"
+					)
+		}
+		)
+public class Transaction {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@Column(name = "fromAccountId", nullable = false)
+	private long fromAccountId;
+
+	@Column(name = "toAccountId", nullable = false)
+	private long toAccountId;
+
+	@Column(name = "amount", nullable = false)
+	private double amount;
+
+	public Transaction() {
+	}
+
+	public Transaction(final long fromAccountId, final long toAccountId, final double amount) {
+		this.fromAccountId = fromAccountId;
+		this.toAccountId = toAccountId;
+		this.amount = amount;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(final long id) {
+		this.id = id;
+	}
+	public long getFromAccountId() {
+		return fromAccountId;
+	}
+
+	public void setFromAccountId(final long fromAccountId) {
+		this.fromAccountId = fromAccountId;
+	}
+
+	public long getToAccountId() {
+		return toAccountId;
+	}
+
+	public void setAcountId(final long toAccountId) {
+		this.toAccountId = toAccountId;
+	}
+
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(final double amount) {
+		this.amount = amount;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if(o instanceof Transaction)
+		{
+			final Transaction that = (Transaction) o;
+			return this.id==that.id
+					&&this.fromAccountId==that.fromAccountId
+					&&this.toAccountId==that.toAccountId
+					&&Double.doubleToLongBits(this.amount)==Double.doubleToLongBits(that.amount);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, fromAccountId,toAccountId,amount);
+	}
+}

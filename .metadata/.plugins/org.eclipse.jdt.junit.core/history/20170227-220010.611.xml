@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TransactionResourceTest" project="bank-example" tests="1" started="1" failures="0" errors="1" ignored="0">
+  <testsuite name="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.0">
+    <testcase name="initializationError" classname="com.aprilsulu.bank.resources.TransactionResourceTest" time="0.0">
+      <error>org.junit.internal.runners.rules.ValidationError: The @ClassRule 'RESOURCES' must be public.&#13;
+	at org.junit.internal.runners.rules.RuleMemberValidator$MemberMustBePublic.validate(RuleMemberValidator.java:222)&#13;
+	at org.junit.internal.runners.rules.RuleMemberValidator.validateMember(RuleMemberValidator.java:99)&#13;
+	at org.junit.internal.runners.rules.RuleMemberValidator.validate(RuleMemberValidator.java:93)&#13;
+	at org.junit.runners.ParentRunner.validateClassRules(ParentRunner.java:160)&#13;
+	at org.junit.runners.ParentRunner.collectInitializationErrors(ParentRunner.java:127)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.collectInitializationErrors(BlockJUnit4ClassRunner.java:124)&#13;
+	at org.junit.runners.ParentRunner.validate(ParentRunner.java:416)&#13;
+	at org.junit.runners.ParentRunner.&lt;init&gt;(ParentRunner.java:84)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.&lt;init&gt;(BlockJUnit4ClassRunner.java:65)&#13;
+	at org.junit.internal.builders.JUnit4Builder.runnerForClass(JUnit4Builder.java:10)&#13;
+	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:59)&#13;
+	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:26)&#13;
+	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:59)&#13;
+	at org.junit.internal.requests.ClassRequest.getRunner(ClassRequest.java:33)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.createUnfilteredTest(JUnit4TestLoader.java:84)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.createTest(JUnit4TestLoader.java:70)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.loadTests(JUnit4TestLoader.java:43)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:444)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

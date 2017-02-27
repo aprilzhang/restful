@@ -1,0 +1,33 @@
+package com.aprilsulu.bank.db;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.SessionFactory;
+
+import com.aprilsulu.bank.core.Account;
+
+import io.dropwizard.hibernate.AbstractDAO;
+
+public class AccountDAO extends AbstractDAO<Account> {
+	public AccountDAO(SessionFactory factory) {
+		super(factory);
+	}
+
+	public Optional<Account> findById(long id) {
+		return Optional.ofNullable(get(id));
+	}
+
+	public Account create(Account person) {
+		return persist(person);
+	}
+
+	public Account updateBalance(long id, double balance)
+	{
+		get(id).setBalance(balance);
+	}
+
+	public List<Account> findAll() {
+		return list(namedQuery("com.aprilsulu.bank.core.Account.findAll"));
+	}
+}

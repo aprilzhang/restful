@@ -1,0 +1,37 @@
+package com.aprilsulu.bank.resources;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.db.AccountDAO;
+
+import io.dropwizard.hibernate.UnitOfWork;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+
+@Path("/accounts")
+@Produces(MediaType.APPLICATION_JSON)
+public class AccountResource {
+
+    private final AccountDAO peopleDAO;
+
+    public AccountResource(AccountDAO peopleDAO) {
+        this.peopleDAO = peopleDAO;
+    }
+
+    @POST
+    @UnitOfWork
+    public Account createPerson(Account person) {
+        return peopleDAO.create(person);
+    }
+
+    @GET
+    @UnitOfWork
+    public List<Account> listPeople() {
+        return peopleDAO.findAll();
+    }
+
+}

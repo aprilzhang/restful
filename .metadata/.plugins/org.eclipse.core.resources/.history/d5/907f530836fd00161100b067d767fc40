@@ -1,0 +1,82 @@
+package com.aprilsulu.bank.resources;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.db.AccountDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.common.collect.ImmutableList;
+
+import io.dropwizard.testing.junit.ResourceTestRule;
+
+/**
+ * Unit tests for {@link AccountResource}.
+ */
+@RunWith(MockitoJUnitRunner.class)
+public class AccountResourceTest {
+	private static final AccountDAO ACCOUNT_DAO = mock(AccountDAO.class);
+	@ClassRule
+	public static final ResourceTestRule RESOURCES = ResourceTestRule.builder()
+	.addResource(new AccountResource(ACCOUNT_DAO))
+	.build();
+	@Captor
+	private ArgumentCaptor<Account> accountCaptor;
+	private Account account;
+
+	@Before
+	public void setUp() {
+		account = new Account();
+		account.setBalance(500.12);
+	}
+
+	@After
+	public void tearDown() {
+		reset(ACCOUNT_DAO);
+	}
+
+	@Test
+	public void createAccount() throws JsonProcessingException {
+		when(ACCOUNT_DAO.create(any(Account.class))).thenReturn(account);
+		final Response response = RESOURCES.target("/accounts")
+				.request(MediaType.APPLICATION_JSON_TYPE)
+				.post(Entity.entity(account, MediaType.APPLICATION_JSON_TYPE));
+
+		assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
+		verify(PERSON_DAO).create(personCaptor.capture());
+		assertThat(personCaptor.getValue()).isEqualTo(person);
+	}
+
+	@Test
+	public void listPeople() throws Exception {
+		final ImmutableList<Account> people = ImmutableList.of(person);
+		when(PERSON_DAO.findAll()).thenReturn(people);
+
+		final List<Account> response = RESOURCES.target("/people")
+				.request().get(new GenericType<List<Account>>() {
+				});
+
+		verify(PERSON_DAO).findAll();
+		assertThat(response).containsAll(people);
+	}
+}
