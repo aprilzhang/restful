@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="IntegrationTest.testTransferNotEnoughBalance" project="bank-example" tests="1" started="1" failures="0" errors="1" ignored="0">
+  <testcase name="testTransferNotEnoughBalance" classname="com.aprilsulu.bank.IntegrationTest" time="5.137">
+    <error>javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: Read timed out&#13;
+	at org.glassfish.jersey.client.internal.HttpUrlConnector.apply(HttpUrlConnector.java:287)&#13;
+	at org.glassfish.jersey.client.ClientRuntime.invoke(ClientRuntime.java:252)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$1.call(JerseyInvocation.java:684)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$1.call(JerseyInvocation.java:681)&#13;
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)&#13;
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)&#13;
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:228)&#13;
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:444)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:681)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:437)&#13;
+	at org.glassfish.jersey.client.JerseyInvocation$Builder.post(JerseyInvocation.java:343)&#13;
+	at com.aprilsulu.bank.IntegrationTest.testTransferNotEnoughBalance(IntegrationTest.java:114)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:48)&#13;
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: java.net.SocketTimeoutException: Read timed out&#13;
+	at java.net.SocketInputStream.socketRead0(Native Method)&#13;
+	at java.net.SocketInputStream.socketRead(Unknown Source)&#13;
+	at java.net.SocketInputStream.read(Unknown Source)&#13;
+	at java.net.SocketInputStream.read(Unknown Source)&#13;
+	at java.io.BufferedInputStream.fill(Unknown Source)&#13;
+	at java.io.BufferedInputStream.read1(Unknown Source)&#13;
+	at java.io.BufferedInputStream.read(Unknown Source)&#13;
+	at sun.net.www.http.HttpClient.parseHTTPHeader(Unknown Source)&#13;
+	at sun.net.www.http.HttpClient.parseHTTP(Unknown Source)&#13;
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)&#13;
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)&#13;
+	at java.net.HttpURLConnection.getResponseCode(Unknown Source)&#13;
+	at org.glassfish.jersey.client.internal.HttpUrlConnector._apply(HttpUrlConnector.java:399)&#13;
+	at org.glassfish.jersey.client.internal.HttpUrlConnector.apply(HttpUrlConnector.java:285)&#13;
+	... 37 more&#13;
+&#13;
+</error>
+  </testcase>
+</testrun>

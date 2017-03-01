@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="IntegrationTest" project="bank-example" tests="3" started="0" failures="0" errors="1" ignored="0">
+  <testsuite name="com.aprilsulu.bank.IntegrationTest" incomplete="true">
+    <error>org.hibernate.HibernateException: Errors in named queries: com.aprilsulu.bank.core.Transaction.findAll&#13;
+	at org.hibernate.internal.SessionFactoryImpl.&lt;init&gt;(SessionFactoryImpl.java:329)&#13;
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:445)&#13;
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:710)&#13;
+	at io.dropwizard.hibernate.SessionFactoryFactory.buildSessionFactory(SessionFactoryFactory.java:96)&#13;
+	at io.dropwizard.hibernate.SessionFactoryFactory.build(SessionFactoryFactory.java:49)&#13;
+	at io.dropwizard.hibernate.SessionFactoryFactory.build(SessionFactoryFactory.java:39)&#13;
+	at io.dropwizard.hibernate.HibernateBundle.run(HibernateBundle.java:62)&#13;
+	at io.dropwizard.hibernate.HibernateBundle.run(HibernateBundle.java:15)&#13;
+	at io.dropwizard.setup.Bootstrap.run(Bootstrap.java:200)&#13;
+	at io.dropwizard.testing.DropwizardTestSupport$2.run(DropwizardTestSupport.java:197)&#13;
+	at io.dropwizard.cli.EnvironmentCommand.run(EnvironmentCommand.java:42)&#13;
+	at io.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:85)&#13;
+	at io.dropwizard.testing.DropwizardTestSupport.startIfRequired(DropwizardTestSupport.java:224)&#13;
+	at io.dropwizard.testing.DropwizardTestSupport.before(DropwizardTestSupport.java:141)&#13;
+	at io.dropwizard.testing.junit.DropwizardAppRule.before(DropwizardAppRule.java:154)&#13;
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:46)&#13;
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</error>
+    <testcase name="testGetIndividualAccount" classname="com.aprilsulu.bank.IntegrationTest" incomplete="true"/>
+    <testcase name="testGetAccounts" classname="com.aprilsulu.bank.IntegrationTest" incomplete="true"/>
+    <testcase name="testTransfer" classname="com.aprilsulu.bank.IntegrationTest" incomplete="true"/>
+  </testsuite>
+</testrun>

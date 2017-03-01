@@ -1,35 +1,75 @@
 package com.aprilsulu.bank.db;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.SessionFactory;
 
 import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.TransferInfo;
+import com.google.common.annotations.VisibleForTesting;
 
 import io.dropwizard.hibernate.AbstractDAO;
+/**
+ * Data access object for account
+ *
+ * @author yzhang
+ *
+ */
+public  class AccountDAO extends AbstractDAO<Account> {
 
-public class AccountDAO extends AbstractDAO<Account> {
+	/**
+	 * Constructor
+	 * @param factory not null
+	 */
 	public AccountDAO(final SessionFactory factory) {
 		super(factory);
 	}
 
+	/**
+	 * Find account by id
+	 * @param id account id
+	 * @return
+	 */
 	public Optional<Account> findById(final long id) {
 		return Optional.ofNullable(get(id));
 	}
 
-	public Account create(final Account person) {
-		return persist(person);
-	}
-
-	public Account updateBalance(final long id, final double balance)
+	/**
+	 * Transfer money from one account to another
+	 * @param transferInfo not null
+	 */
+	public void transfer(final TransferInfo transferInfo)
 	{
-		final Account account = get(id);
-		account.setBalance(balance);
-		return persist(account);
+		checkNotNull(transferInfo);final Account fromAccount = get(transferInfo.getFromAccountId());
+		final Account toAccount = get(transferInfo.getToAccountId());
+
+		checkNotNull(fromAccount, "Cannot find account "+ transferInfo.getFromAccountId());
+		checkNotNull(toAccount, "Cannot find account "+ transferInfo.getToAccountId());
+
+		final double amount = transferInfo.getAmount();
+
+		checkState(fromAccount.getBalance()>=amount, transferInfo.getFromAccountId() +" do not have enough money");
+
+		fromAccount.setBalance(fromAccount.getBalance()-amount);
+		toAccount.setBalance(toAccount.getBalance()+amount);
+		currentSession().update(fromAccount);
+		currentSession().update(toAccount);
 	}
 
+	/**
+	 *Find all the accounts
+	 * @return
+	 */
 	public List<Account> findAll() {
 		return list(namedQuery("com.aprilsulu.bank.core.Account.findAll"));
+	}
+
+	@VisibleForTesting
+	Account create(final Account account) {
+		return persist(account);
 	}
 }

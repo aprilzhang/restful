@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AccountResourceTest" project="bank-example" tests="7" started="0" failures="0" errors="1" ignored="0">
+  <testsuite name="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true">
+    <error>java.lang.ExceptionInInitializerError&#13;
+	at sun.misc.Unsafe.ensureClassInitialized(Native Method)&#13;
+	at sun.reflect.UnsafeFieldAccessorFactory.newFieldAccessor(Unknown Source)&#13;
+	at sun.reflect.ReflectionFactory.newFieldAccessor(Unknown Source)&#13;
+	at java.lang.reflect.Field.acquireFieldAccessor(Unknown Source)&#13;
+	at java.lang.reflect.Field.getFieldAccessor(Unknown Source)&#13;
+	at java.lang.reflect.Field.get(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkField.get(FrameworkField.java:73)&#13;
+	at org.junit.runners.model.TestClass.getAnnotatedFieldValues(TestClass.java:230)&#13;
+	at org.junit.runners.ParentRunner.classRules(ParentRunner.java:255)&#13;
+	at org.junit.runners.ParentRunner.withClassRules(ParentRunner.java:244)&#13;
+	at org.junit.runners.ParentRunner.classBlock(ParentRunner.java:194)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:362)&#13;
+	at org.mockito.internal.runners.DefaultInternalRunner$1.run(DefaultInternalRunner.java:68)&#13;
+	at org.mockito.internal.runners.DefaultInternalRunner.run(DefaultInternalRunner.java:74)&#13;
+	at org.mockito.internal.runners.StrictRunner.run(StrictRunner.java:39)&#13;
+	at org.mockito.junit.MockitoJUnitRunner.run(MockitoJUnitRunner.java:161)&#13;
+	at org.mockito.runners.MockitoJUnitRunner.run(MockitoJUnitRunner.java:53)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: org.mockito.exceptions.base.MockitoException: Unable to create mock instance of type 'AccountDAO'&#13;
+	at com.aprilsulu.bank.resources.AccountResourceTest.&lt;clinit&gt;(AccountResourceTest.java:36)&#13;
+	... 23 more&#13;
+Caused by: org.mockito.internal.creation.instance.InstantiationException: 
+Unable to create instance of 'AccountDAO$MockitoMock$1758930401'.
+Please ensure it has 0-arg constructor which invokes cleanly.&#13;
+	... 24 more&#13;
+Caused by: java.lang.NoSuchMethodException: com.aprilsulu.bank.db.AccountDAO$MockitoMock$1758930401.&lt;init&gt;()&#13;
+	at java.lang.Class.getConstructor0(Unknown Source)&#13;
+	at java.lang.Class.getDeclaredConstructor(Unknown Source)&#13;
+	at org.mockito.internal.creation.instance.ConstructorInstantiator.noArgConstructor(ConstructorInstantiator.java:78)&#13;
+	at org.mockito.internal.creation.instance.ConstructorInstantiator.newInstance(ConstructorInstantiator.java:22)&#13;
+	at org.mockito.internal.creation.bytebuddy.SubclassByteBuddyMockMaker.createMock(SubclassByteBuddyMockMaker.java:47)&#13;
+	at org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker.createMock(ByteBuddyMockMaker.java:26)&#13;
+	at org.mockito.internal.util.MockUtil.createMock(MockUtil.java:35)&#13;
+	at org.mockito.internal.MockitoCore.mock(MockitoCore.java:65)&#13;
+	at org.mockito.Mockito.spy(Mockito.java:1819)&#13;
+	... 24 more&#13;
+&#13;
+</error>
+    <testcase name="testPutNotSupported" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+    <testcase name="testListEmpty" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+    <testcase name="testListAccounts" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+    <testcase name="testGetAccountNotFound" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+    <testcase name="testGetAccountSuccess" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+    <testcase name="testDeleteNotSupported" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+    <testcase name="testTransfer" classname="com.aprilsulu.bank.resources.AccountResourceTest" incomplete="true"/>
+  </testsuite>
+</testrun>

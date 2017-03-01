@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AccountResourceTest" project="bank-example" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.bank.resources.AccountResourceTest" time="0.28">
+    <testcase name="getAccountSuccess" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.244"/>
+    <testcase name="listAccounts" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.019"/>
+    <testcase name="getPostNotSupported" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.012"/>
+    <testcase name="getAccountNotFound" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.004"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,71 @@
+package com.aprilsulu.bank.db;
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.TransferInfo;
+import com.google.common.annotations.VisibleForTesting;
+
+import io.dropwizard.hibernate.AbstractDAO;
+/**
+ * Data access object for account
+ *
+ * @author yzhang
+ *
+ */
+public final class AccountDAO extends AbstractDAO<Account> {
+	/**
+	 *
+	 * @param factory
+	 */
+	public AccountDAO(final SessionFactory factory) {
+		super(factory);
+	}
+
+	public Optional<Account> findById(final long id) {
+		return Optional.ofNullable(get(id));
+	}
+
+	public void transfer(final TransferInfo transferInfo)
+	{
+		requireNonNull(transferInfo);
+		final Transaction transaction =currentSession().beginTransaction();
+		try
+		{
+			final Account fromAccount = get(transferInfo.getFromAccountId());
+			final Account toAccount = get(transferInfo.getToAccountId());
+
+			final double amount = transferInfo.getAmount();
+			if (fromAccount.getBalance() <amount )
+			{
+
+			}
+			fromAccount.setBalance(fromAccount.getBalance()-amount);
+			toAccount.setBalance(toAccount.getBalance()+amount);
+			currentSession().update(fromAccount);
+			currentSession().update(toAccount);
+			transaction.commit();
+		}
+		catch(final HibernateException he)
+		{
+			transaction.rollback();
+			throw he;
+		}
+	}
+
+	public List<Account> findAll() {
+		return list(namedQuery("com.aprilsulu.bank.core.Account.findAll"));
+	}
+
+	@VisibleForTesting
+	Account create(final Account account) {
+		return persist(account);
+	}
+}

@@ -32,11 +32,15 @@ public class Account {
 	public Account() {
 	}
 
+	public Account(final double balance) {
+		this.balance = balance;
+	}
+
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
@@ -44,12 +48,12 @@ public class Account {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(final double balance) {
 		this.balance = balance;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if(o instanceof Account)
 		{
 			final Account that = (Account) o;

@@ -1,0 +1,84 @@
+package com.aprilsulu.bank.db;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.TransferInfo;
+import com.google.common.annotations.VisibleForTesting;
+
+import io.dropwizard.hibernate.AbstractDAO;
+/**
+ * Data access object for account
+ *
+ * @author yzhang
+ *
+ */
+public final class AccountDAO extends AbstractDAO<Account> {
+
+	/**
+	 * Constructor
+	 * @param factory not null
+	 */
+	public AccountDAO(final SessionFactory factory) {
+		super(factory);
+	}
+
+	/**
+	 * Find account by id
+	 * @param id account id
+	 * @return
+	 */
+	public Optional<Account> findById(final long id) {
+		return Optional.ofNullable(get(id));
+	}
+
+	/**
+	 * Transfer money from one account to another
+	 * @param transferInfo not null
+	 */
+	public void transfer(final TransferInfo transferInfo) throws HibernateException
+	{
+		checkNotNull(transferInfo);
+		final Transaction transaction =currentSession().beginTransaction();
+		try
+		{
+			final Account fromAccount = get(transferInfo.getFromAccountId());
+			final Account toAccount = get(transferInfo.getToAccountId());
+
+			final double amount = transferInfo.getAmount();
+			if (fromAccount.getBalance() <amount )
+			{
+
+			}
+			fromAccount.setBalance(fromAccount.getBalance()-amount);
+			toAccount.setBalance(toAccount.getBalance()+amount);
+			currentSession().update(fromAccount);
+			currentSession().update(toAccount);
+			transaction.commit();
+		}
+		catch(final HibernateException he)
+		{
+			transaction.rollback();
+			throw he;
+		}
+	}
+	/**
+	 *Find all the accounts
+	 * @return
+	 */
+	public List<Account> findAll() {
+		return list(namedQuery("com.aprilsulu.bank.core.Account.findAll"));
+	}
+
+	@VisibleForTesting
+	Account create(final Account account) {
+		return persist(account);
+	}
+}

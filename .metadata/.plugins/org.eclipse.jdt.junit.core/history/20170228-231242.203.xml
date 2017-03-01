@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AccountResourceTest" project="bank-example" tests="11" started="11" failures="0" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.bank.resources.AccountResourceTest" time="0.309">
+    <testcase name="testPutNotSupported" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.177"/>
+    <testcase name="testTransferHibernateException" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.09"/>
+    <testcase name="testListEmpty" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.02"/>
+    <testcase name="testTransferInvalidPost" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.001"/>
+    <testcase name="testListAccounts" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.006"/>
+    <testcase name="testGetAccountNotFound" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.003"/>
+    <testcase name="testTransferNotEnoughBalance" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.002"/>
+    <testcase name="testGetAccountSuccess" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.003"/>
+    <testcase name="testDeleteNotSupported" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.001"/>
+    <testcase name="testTransferIdNotFound" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.002"/>
+    <testcase name="testTransfer" classname="com.aprilsulu.bank.resources.AccountResourceTest" time="0.004"/>
+  </testsuite>
+</testrun>

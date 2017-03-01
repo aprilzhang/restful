@@ -1,0 +1,118 @@
+package com.aprilsulu.bank.db;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.TransferInfo;
+
+import io.dropwizard.testing.junit.DAOTestRule;
+
+public final class AccountDAOTest {
+
+	@Rule
+	public DAOTestRule daoTestRule = DAOTestRule.newBuilder()
+	.addEntityClass(Account.class)
+	.build();
+
+	private AccountDAO accountDAO;
+
+	@Before
+	public void setUp() throws Exception {
+		accountDAO = new AccountDAO(daoTestRule.getSessionFactory());
+	}
+
+	@Test
+	public void testCreateAccount() {
+		final Account account = daoTestRule.inTransaction(() -> accountDAO.create(new Account()));
+		assertThat(account.getId()).isGreaterThan(0);
+		assertThat(account.getBalance()).isEqualTo(0);
+		assertThat(accountDAO.findById(account.getId())).isEqualTo(Optional.of(account));
+	}
+
+	@Test
+	public void testFindById() {
+		final Account account = new Account(300.02);
+		accountDAO.create(account);
+		assertThat(accountDAO.findById(account.getId())).isEqualTo(Optional.of(account));
+	}
+
+	@Test
+	public void testFindByIdNotFound() {
+		final Account account = new Account(300.02);
+		accountDAO.create(account);
+		assertThat(accountDAO.findById(-2)).isEqualTo(Optional.empty());
+	}
+
+	@Test
+	public void testFindAll() {
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(new Account());
+			accountDAO.create(new Account(200));
+			accountDAO.create(new Account(1.01));
+		});
+
+		final List<Account> accounts = accountDAO.findAll();
+		assertThat(accounts).extracting("balance").containsOnly(0.0, 200.0,1.01);
+	}
+
+	@Test
+	public void transfer() {
+		final Account account1 = new Account();
+		account1.setBalance(300);
+		final Account account2 = new Account();
+		account2.setBalance(100);
+
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(account1);
+			accountDAO.create(account2);
+		});
+		final TransferInfo transfer = new TransferInfo(1,2,200);
+		accountDAO.transfer(transfer);
+
+		assertThat(accountDAO.findById(account1.getId()).get().getBalance()).isEqualTo(100);
+		assertThat(accountDAO.findById(account2.getId()).get().getBalance()).isEqualTo(300);
+	}
+
+	@Test
+	public void transferWithNotEnoughBalance() {
+		final Account account1 = new Account();
+		account1.setBalance(50);
+		final Account account2 = new Account();
+		account2.setBalance(100);
+
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(account1);
+			accountDAO.create(account2);
+		});
+		final TransferInfo transfer = new TransferInfo(1,2,200);
+		accountDAO.transfer(transfer);
+
+		assertThat(accountDAO.findById(account1.getId()).get().getBalance()).isEqualTo(100);
+		assertThat(accountDAO.findById(account2.getId()).get().getBalance()).isEqualTo(300);
+	}
+
+	@Test
+	public void transferWithNotEnoughBalance() {
+		final Account account1 = new Account();
+		account1.setBalance(50);
+		final Account account2 = new Account();
+		account2.setBalance(100);
+
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(account1);
+			accountDAO.create(account2);
+		});
+		final TransferInfo transfer = new TransferInfo(1,2,200);
+		accountDAO.transfer(transfer);
+
+		assertThat(accountDAO.findById(account1.getId()).get().getBalance()).isEqualTo(100);
+		assertThat(accountDAO.findById(account2.getId()).get().getBalance()).isEqualTo(300);
+	}
+}

@@ -1,0 +1,94 @@
+package com.aprilsulu.bank.resources;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.db.AccountDAO;
+import com.google.common.collect.ImmutableList;
+
+import io.dropwizard.testing.junit.ResourceTestRule;
+
+/**
+ * Unit tests for {@link AccountResource}.
+ */
+@RunWith(MockitoJUnitRunner.class)
+public final class AccountResourceTest {
+	private static final AccountDAO ACCOUNT_DAO = mock(AccountDAO.class);
+	@ClassRule
+	public static final ResourceTestRule RESOURCES = ResourceTestRule.builder()
+	.addResource(new AccountResource(ACCOUNT_DAO))
+	.build();
+	private Account account;
+
+	@Before
+	public void setUp() {
+		account = new Account();
+		account.setBalance(500.12);
+	}
+
+	@After
+	public void tearDown() {
+		reset(ACCOUNT_DAO);
+	}
+
+	@Test
+	public void getAccountSuccess() {
+		when(ACCOUNT_DAO.findById(1L)).thenReturn(Optional.of(account));
+
+		final Account found = RESOURCES.target("/accounts/1").request().get(Account.class);
+
+		assertThat(found.getId()).isEqualTo(account.getId());
+		verify(ACCOUNT_DAO).findById(1L);
+	}
+
+	@Test
+	public void getAccountNotFound() {
+		when(ACCOUNT_DAO.findById(2L)).thenReturn(Optional.empty());
+		final Response response = RESOURCES.target("/accounts/2").request().get();
+
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+		verify(ACCOUNT_DAO).findById(2L);
+	}
+
+
+	@Test
+	public void listAccounts() throws Exception {
+		final ImmutableList<Account> accounts = ImmutableList.of(account);
+		when(ACCOUNT_DAO.findAll()).thenReturn(accounts);
+
+		final List<Account> response = RESOURCES.target("/accounts")
+				.request().get(new GenericType<List<Account>>() {});
+
+		verify(ACCOUNT_DAO).findAll();
+		assertThat(response).containsAll(accounts);
+	}
+
+
+	@Test
+	public void getPutNotSupported() {
+		final Response response = RESOURCES.target("/accounts")
+				.request(MediaType.APPLICATION_JSON_TYPE)
+				.put(Entity.entity(new Account(), MediaType.APPLICATION_JSON_TYPE));
+
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.METHOD_NOT_ALLOWED.getStatusCode());
+	}
+}

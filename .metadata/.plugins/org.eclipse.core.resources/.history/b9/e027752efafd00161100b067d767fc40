@@ -1,0 +1,63 @@
+package com.aprilsulu.bank.db;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import com.aprilsulu.bank.core.Account;
+
+import io.dropwizard.testing.junit.DAOTestRule;
+
+public final class AccountDAOTest {
+
+	@Rule
+	public DAOTestRule daoTestRule = DAOTestRule.newBuilder()
+	.addEntityClass(Account.class)
+	.build();
+
+	private AccountDAO accountDAO;
+
+	@Before
+	public void setUp() throws Exception {
+		accountDAO = new AccountDAO(daoTestRule.getSessionFactory());
+	}
+
+	@Test
+	public void createAccount() {
+		final Account account = daoTestRule.inTransaction(() -> accountDAO.create(new Account()));
+		assertThat(account.getId()).isGreaterThan(0);
+		assertThat(account.getBalance()).isEqualTo(0);
+		assertThat(accountDAO.findById(account.getId())).isEqualTo(Optional.of(account));
+	}
+
+	@Test
+	public void updateBalance() {
+		final Account account = daoTestRule.inTransaction(() -> accountDAO.create(new Account()));
+
+		final long id = account.getId();
+		assertThat(id).isGreaterThan(0);
+		assertThat(account.getBalance()).isEqualTo(0);
+		assertThat(accountDAO.findById(account.getId())).isEqualTo(Optional.of(account));
+
+		final Account accountAfterUpdate = daoTestRule.inTransaction(() -> accountDAO.updateBalance(id,500));
+		assertThat(accountAfterUpdate.getId()).isEqualTo(id);
+		assertThat(accountAfterUpdate.getBalance()).isEqualTo(500);
+	}
+
+	@Test
+	public void findAll() {
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(new Account());
+			accountDAO.create(new Account());
+			accountDAO.create(new Account());
+		});
+
+		final List<Account> accounts = accountDAO.findAll();
+		assertThat(accounts).extracting("balance").containsOnly(0.0, 0.0, 0.0);
+	}
+}

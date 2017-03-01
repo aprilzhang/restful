@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.TransferInfo;
 
 import io.dropwizard.testing.junit.DAOTestRule;
 
@@ -28,7 +29,7 @@ public final class AccountDAOTest {
 	}
 
 	@Test
-	public void createAccount() {
+	public void testCreateAccount() {
 		final Account account = daoTestRule.inTransaction(() -> accountDAO.create(new Account()));
 		assertThat(account.getId()).isGreaterThan(0);
 		assertThat(account.getBalance()).isEqualTo(0);
@@ -36,28 +37,75 @@ public final class AccountDAOTest {
 	}
 
 	@Test
-	public void updateBalance() {
-		final Account account = daoTestRule.inTransaction(() -> accountDAO.create(new Account()));
-
-		final long id = account.getId();
-		assertThat(id).isGreaterThan(0);
-		assertThat(account.getBalance()).isEqualTo(0);
+	public void testFindById() {
+		final Account account = new Account(300.02);
+		accountDAO.create(account);
 		assertThat(accountDAO.findById(account.getId())).isEqualTo(Optional.of(account));
-
-		final Account accountAfterUpdate = daoTestRule.inTransaction(() -> accountDAO.updateBalance(id,500));
-		assertThat(accountAfterUpdate.getId()).isEqualTo(id);
-		assertThat(accountAfterUpdate.getBalance()).isEqualTo(500);
 	}
 
 	@Test
-	public void findAll() {
+	public void testFindByIdNotFound() {
+		assertThat(accountDAO.findById(-2)).isEqualTo(Optional.empty());
+	}
+
+	@Test
+	public void testFindAllEmpty() {
+
+		final List<Account> accounts = accountDAO.findAll();
+		assertThat(accounts).isEmpty();
+	}
+
+	@Test
+	public void testFindAll() {
 		daoTestRule.inTransaction(() -> {
 			accountDAO.create(new Account());
-			accountDAO.create(new Account());
-			accountDAO.create(new Account());
+			accountDAO.create(new Account(200));
+			accountDAO.create(new Account(1.01));
 		});
 
 		final List<Account> accounts = accountDAO.findAll();
-		assertThat(accounts).extracting("balance").containsOnly(0.0, 0.0, 0.0);
+		assertThat(accounts).extracting("balance").containsOnly(0.0, 200.0,1.01);
+	}
+
+	@Test
+	public void testTransfer() {
+		final Account account1 = new Account();
+		account1.setBalance(300);
+		final Account account2 = new Account();
+		account2.setBalance(100);
+
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(account1);
+			accountDAO.create(account2);
+		});
+		final TransferInfo transfer = new TransferInfo(1,2,200);
+		accountDAO.transfer(transfer);
+
+		assertThat(accountDAO.findById(account1.getId()).get().getBalance()).isEqualTo(100);
+		assertThat(accountDAO.findById(account2.getId()).get().getBalance()).isEqualTo(300);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testTransferWithIdNotFound() {
+		final Account account1 = new Account();
+		account1.setBalance(50);
+
+		accountDAO.create(account1);
+		accountDAO.transfer(new TransferInfo(account1.getId(),-2,200));
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testTransferWithNotEnoughBalance() {
+		final Account account1 = new Account();
+		account1.setBalance(50);
+		final Account account2 = new Account();
+		account2.setBalance(100);
+
+		daoTestRule.inTransaction(() -> {
+			accountDAO.create(account1);
+			accountDAO.create(account2);
+		});
+		final TransferInfo transfer = new TransferInfo(account1.getId(),account2.getId(),200);
+		accountDAO.transfer(transfer);
 	}
 }

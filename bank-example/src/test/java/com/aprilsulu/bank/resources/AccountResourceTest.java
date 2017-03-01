@@ -2,6 +2,7 @@ package com.aprilsulu.bank.resources;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,15 +14,18 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import org.hibernate.HibernateException;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.core.TransferInfo;
 import com.aprilsulu.bank.db.AccountDAO;
 import com.google.common.collect.ImmutableList;
 
@@ -37,13 +41,6 @@ public final class AccountResourceTest {
 	public static final ResourceTestRule RESOURCES = ResourceTestRule.builder()
 	.addResource(new AccountResource(ACCOUNT_DAO))
 	.build();
-	private Account account;
-
-	@Before
-	public void setUp() {
-		account = new Account();
-		account.setBalance(500.12);
-	}
 
 	@After
 	public void tearDown() {
@@ -51,7 +48,8 @@ public final class AccountResourceTest {
 	}
 
 	@Test
-	public void getAccountSuccess() {
+	public void testGetAccountSuccess() {
+		final Account account = new Account(500.12);
 		when(ACCOUNT_DAO.findById(1L)).thenReturn(Optional.of(account));
 
 		final Account found = RESOURCES.target("/accounts/1").request().get(Account.class);
@@ -61,18 +59,20 @@ public final class AccountResourceTest {
 	}
 
 	@Test
-	public void getAccountNotFound() {
+	public void testGetAccountNotFound() {
 		when(ACCOUNT_DAO.findById(2L)).thenReturn(Optional.empty());
 		final Response response = RESOURCES.target("/accounts/2").request().get();
 
-		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Status.NOT_FOUND.getStatusCode());
 		verify(ACCOUNT_DAO).findById(2L);
 	}
 
 
 	@Test
-	public void listAccounts() throws Exception {
-		final ImmutableList<Account> accounts = ImmutableList.of(account);
+	public void testListAccounts() throws Exception {
+		final Account account1 = new Account(500.12);
+		final Account account2 = new Account(10);
+		final ImmutableList<Account> accounts = ImmutableList.of(account1,account2);
 		when(ACCOUNT_DAO.findAll()).thenReturn(accounts);
 
 		final List<Account> response = RESOURCES.target("/accounts")
@@ -82,12 +82,107 @@ public final class AccountResourceTest {
 		assertThat(response).containsAll(accounts);
 	}
 
+	@Test
+	public void testListEmpty() throws Exception {
+		when(ACCOUNT_DAO.findAll()).thenReturn(ImmutableList.of());
+
+		final List<Account> response = RESOURCES.target("/accounts")
+				.request().get(new GenericType<List<Account>>() {});
+
+		verify(ACCOUNT_DAO).findAll();
+		assertThat(response).isEmpty();
+	}
 
 	@Test
-	public void getPostNotSupported() {
+	public void testTransfer() throws Exception {
+		final Account account1 = new Account(500.12);
+		final Account account2 = new Account(10);
+		final TransferInfo info = new TransferInfo(account1.getId(),account2.getId(),354.1);
+
+		Mockito.doNothing().when(ACCOUNT_DAO).transfer(info);
+
+		final Response response = RESOURCES.target("/accounts/transfer")
+				.request().post(Entity.entity(info, MediaType.APPLICATION_JSON_TYPE));
+
+		verify(ACCOUNT_DAO).transfer(info);
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Status.OK.getStatusCode());
+	}
+
+	@Test
+	public void testTransferInvalidPost() throws Exception {
+
+		final Response response = RESOURCES.target("/accounts/transfer")
+				.request().post(Entity.entity(null, MediaType.APPLICATION_JSON_TYPE));
+
+		verify(ACCOUNT_DAO, never()).transfer(null);
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Status.BAD_REQUEST.getStatusCode());
+	}
+
+	@Test
+	public void testTransferIdNotFound() throws Exception {
+		final Account account1 = new Account(500.12);
+		account1.setId(1);
+		final Account account2 = new Account(10);
+		account2.setId(2);
+		final TransferInfo info = new TransferInfo(3,account2.getId(),354.1);
+
+		Mockito.doThrow(NullPointerException.class).when(ACCOUNT_DAO).transfer(info);
+
+		final Response response = RESOURCES.target("/accounts/transfer")
+				.request().post(Entity.entity(info, MediaType.APPLICATION_JSON_TYPE));
+
+		verify(ACCOUNT_DAO).transfer(info);
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Status.BAD_REQUEST.getStatusCode());
+	}
+
+	@Test
+	public void testTransferNotEnoughBalance() throws Exception {
+		final Account account1 = new Account(500.12);
+		account1.setId(1);
+		final Account account2 = new Account(10);
+		account2.setId(2);
+		final TransferInfo info = new TransferInfo(1,account2.getId(),354.1);
+
+		Mockito.doThrow(IllegalStateException.class).when(ACCOUNT_DAO).transfer(info);
+
+		final Response response = RESOURCES.target("/accounts/transfer")
+				.request().post(Entity.entity(info, MediaType.APPLICATION_JSON_TYPE));
+
+		verify(ACCOUNT_DAO).transfer(info);
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Status.BAD_REQUEST.getStatusCode());
+	}
+
+	@Test
+	public void testTransferHibernateException() throws Exception {
+		final Account account1 = new Account(500.12);
+		account1.setId(1);
+		final Account account2 = new Account(10);
+		account2.setId(2);
+		final TransferInfo info = new TransferInfo(1,account2.getId(),354.1);
+
+		Mockito.doThrow(HibernateException.class).when(ACCOUNT_DAO).transfer(info);
+
+		final Response response = RESOURCES.target("/accounts/transfer")
+				.request().post(Entity.entity(info, MediaType.APPLICATION_JSON_TYPE));
+
+		verify(ACCOUNT_DAO).transfer(info);
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Status.INTERNAL_SERVER_ERROR.getStatusCode());
+	}
+
+	@Test
+	public void testDeleteNotSupported() {
 		final Response response = RESOURCES.target("/accounts")
 				.request(MediaType.APPLICATION_JSON_TYPE)
-				.post(Entity.entity(new Account(), MediaType.APPLICATION_JSON_TYPE));
+				.delete();
+
+		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.METHOD_NOT_ALLOWED.getStatusCode());
+	}
+
+	@Test
+	public void testPutNotSupported() {
+		final Response response = RESOURCES.target("/accounts")
+				.request(MediaType.APPLICATION_JSON_TYPE)
+				.put(Entity.entity(new Account(), MediaType.APPLICATION_JSON_TYPE));
 
 		assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.METHOD_NOT_ALLOWED.getStatusCode());
 	}

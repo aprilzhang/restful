@@ -1,14 +1,10 @@
 package com.aprilsulu.bank;
 
 import com.aprilsulu.bank.core.Account;
-import com.aprilsulu.bank.core.Transaction;
 import com.aprilsulu.bank.db.AccountDAO;
-import com.aprilsulu.bank.db.TransactionDAO;
 import com.aprilsulu.bank.resources.AccountResource;
-import com.aprilsulu.bank.resources.TransactionResource;
 
 import io.dropwizard.Application;
-import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
@@ -23,7 +19,7 @@ public final class BankApplication extends Application<BankConfiguration> {
 	}
 
 	private final HibernateBundle<BankConfiguration> hibernateBundle =
-			new HibernateBundle<BankConfiguration>(Account.class,Transaction.class) {
+			new HibernateBundle<BankConfiguration>(Account.class) {
 		@Override
 		public DataSourceFactory getDataSourceFactory(final BankConfiguration configuration) {
 			return configuration.getDataSourceFactory();
@@ -41,11 +37,8 @@ public final class BankApplication extends Application<BankConfiguration> {
 		bootstrap.setConfigurationSourceProvider(
 				new SubstitutingSourceProvider(
 						bootstrap.getConfigurationSourceProvider(),
-						new EnvironmentVariableSubstitutor(false)
-						)
-				);
+						new EnvironmentVariableSubstitutor(false)));
 
-		bootstrap.addBundle(new AssetsBundle());
 		bootstrap.addBundle(new MigrationsBundle<BankConfiguration>() {
 			@Override
 			public DataSourceFactory getDataSourceFactory(final BankConfiguration configuration) {
@@ -58,8 +51,6 @@ public final class BankApplication extends Application<BankConfiguration> {
 	@Override
 	public void run(final BankConfiguration configuration, final Environment environment) {
 		final AccountDAO accountDAO = new AccountDAO(hibernateBundle.getSessionFactory());
-		final TransactionDAO transactionDao = new TransactionDAO(hibernateBundle.getSessionFactory());
 		environment.jersey().register(new AccountResource(accountDAO));
-		environment.jersey().register(new TransactionResource(transactionDao));
 	}
 }
