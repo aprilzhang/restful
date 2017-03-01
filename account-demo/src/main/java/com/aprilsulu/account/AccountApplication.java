@@ -1,0 +1,60 @@
+package com.aprilsulu.account;
+
+import com.aprilsulu.account.core.Account;
+import com.aprilsulu.account.db.AccountDAO;
+import com.aprilsulu.account.resources.AccountResource;
+
+import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+/**
+ * Entry point of account application
+ * @author yzhang
+ */
+public final class AccountApplication extends Application<AccountConfiguration> {
+
+	public static void main(final String[] args) throws Exception {
+		new AccountApplication().run(args);
+	}
+
+	private final HibernateBundle<AccountConfiguration> hibernateBundle =
+			new HibernateBundle<AccountConfiguration>(Account.class) {
+		@Override
+		public DataSourceFactory getDataSourceFactory(final AccountConfiguration configuration) {
+			return configuration.getDataSourceFactory();
+		}
+	};
+
+	@Override
+	public String getName() {
+		return "account";
+	}
+
+	@Override
+	public void initialize(final Bootstrap<AccountConfiguration> bootstrap) {
+		// Enable variable substitution with environment variables
+		bootstrap.setConfigurationSourceProvider(
+				new SubstitutingSourceProvider(
+						bootstrap.getConfigurationSourceProvider(),
+						new EnvironmentVariableSubstitutor(false)));
+
+		bootstrap.addBundle(new MigrationsBundle<AccountConfiguration>() {
+			@Override
+			public DataSourceFactory getDataSourceFactory(final AccountConfiguration configuration) {
+				return configuration.getDataSourceFactory();
+			}
+		});
+		bootstrap.addBundle(hibernateBundle);
+	}
+
+	@Override
+	public void run(final AccountConfiguration configuration, final Environment environment) {
+		final AccountDAO accountDAO = new AccountDAO(hibernateBundle.getSessionFactory());
+		environment.jersey().register(new AccountResource(accountDAO));
+	}
+}

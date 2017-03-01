@@ -1,0 +1,56 @@
+package com.aprilsulu.account;
+
+import com.aprilsulu.bank.core.Account;
+import com.aprilsulu.bank.db.AccountDAO;
+import com.aprilsulu.bank.resources.AccountResource;
+
+import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+
+public final class BankApplication extends Application<BankConfiguration> {
+	public static void main(final String[] args) throws Exception {
+		new BankApplication().run(args);
+	}
+
+	private final HibernateBundle<BankConfiguration> hibernateBundle =
+			new HibernateBundle<BankConfiguration>(Account.class) {
+		@Override
+		public DataSourceFactory getDataSourceFactory(final BankConfiguration configuration) {
+			return configuration.getDataSourceFactory();
+		}
+	};
+
+	@Override
+	public String getName() {
+		return "bank";
+	}
+
+	@Override
+	public void initialize(final Bootstrap<BankConfiguration> bootstrap) {
+		// Enable variable substitution with environment variables
+		bootstrap.setConfigurationSourceProvider(
+				new SubstitutingSourceProvider(
+						bootstrap.getConfigurationSourceProvider(),
+						new EnvironmentVariableSubstitutor(false)));
+
+		bootstrap.addBundle(new MigrationsBundle<BankConfiguration>() {
+			@Override
+			public DataSourceFactory getDataSourceFactory(final BankConfiguration configuration) {
+				return configuration.getDataSourceFactory();
+			}
+		});
+		bootstrap.addBundle(hibernateBundle);
+	}
+
+	@Override
+	public void run(final BankConfiguration configuration, final Environment environment) {
+		final AccountDAO accountDAO = new AccountDAO(hibernateBundle.getSessionFactory());
+		environment.jersey().register(new AccountResource(accountDAO));
+	}
+}

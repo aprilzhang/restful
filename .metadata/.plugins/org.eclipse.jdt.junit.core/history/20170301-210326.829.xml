@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AccountDAOTest" project="bank-example" tests="9" started="9" failures="1" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.bank.db.AccountDAOTest" time="0.461">
+    <testcase name="testTransferWithIdNotFound" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.119"/>
+    <testcase name="testFindAllEmpty" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.132"/>
+    <testcase name="testCreateAccount" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.039"/>
+    <testcase name="testFindAll" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.023"/>
+    <testcase name="testFindById" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.042"/>
+    <testcase name="testFindByIdNotFound" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.025"/>
+    <testcase name="testTransferWithNotEnoughBalance" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.015"/>
+    <testcase name="testTransfer2" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.031">
+      <failure>
+        <expected>300.0</expected>
+        <actual>100.0</actual>org.junit.ComparisonFailure: expected:&lt;[3]00.0&gt; but was:&lt;[1]00.0&gt;&#13;
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)&#13;
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)&#13;
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)&#13;
+	at com.aprilsulu.bank.db.AccountDAOTest.testTransfer2(AccountDAOTest.java:103)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:48)&#13;
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testTransfer" classname="com.aprilsulu.bank.db.AccountDAOTest" time="0.003"/>
+  </testsuite>
+</testrun>

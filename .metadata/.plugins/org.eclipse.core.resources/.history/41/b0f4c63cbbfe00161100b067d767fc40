@@ -1,0 +1,43 @@
+package com.aprilsulu.bank.service;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.hibernate.HibernateException;
+
+import com.aprilsulu.bank.core.TransferInfo;
+import com.aprilsulu.bank.db.AccountDAO;
+
+public class AccountService {
+
+	private final AccountDAO accountDAO;
+
+	public AccountService(final AccountDAO accountDAO) {
+		this.accountDAO = checkNotNull(accountDAO);
+	}
+
+	public Response transfer(final TransferInfo transferInfo) {
+
+		if(transferInfo==null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity("transfer info cannot be null").build();
+		}
+
+		try
+		{
+			accountDAO.transfer(transferInfo);
+			return Response.ok().build();
+		}
+		catch(IllegalStateException | NullPointerException e)
+		{
+			return Response.status(Status.BAD_REQUEST).entity("failed: "+ e.getMessage()).build();
+		}
+		catch( final HibernateException he)
+		{
+			return Response.serverError().build();
+		}
+	}
+
+}

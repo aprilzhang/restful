@@ -1,0 +1,80 @@
+package com.aprilsulu.account.db;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.SessionFactory;
+
+import com.aprilsulu.account.core.Account;
+import com.aprilsulu.account.core.TransferInfo;
+import com.google.common.annotations.VisibleForTesting;
+
+import io.dropwizard.hibernate.AbstractDAO;
+/**
+ * Data access object for account
+ *
+ * @author yzhang
+ *
+ */
+public class AccountDAO extends AbstractDAO<Account> {
+
+	/**
+	 * Constructor
+	 * @param factory not null
+	 */
+	public AccountDAO(final SessionFactory factory) {
+		super(factory);
+	}
+
+	/**
+	 * Find account by id
+	 * @param id account id
+	 * @return
+	 */
+	public Optional<Account> findById(final long id) {
+		return Optional.ofNullable(get(id));
+	}
+
+	/**
+	 * Transfer money from one account to another
+	 * @param transferInfo not null
+	 */
+	public void transfer(final TransferInfo transferInfo)
+	{
+		checkNotNull(transferInfo,"Transfer info cannot be null");
+		checkArgument(transferInfo.getAmount()>0, "Transfer amount cannot be negative");
+
+		final Account fromAccount = get(transferInfo.getFromAccountId());
+		final Account toAccount = get(transferInfo.getToAccountId());
+
+		checkNotNull(fromAccount, "Cannot find account "+ transferInfo.getFromAccountId());
+		checkNotNull(toAccount, "Cannot find account "+ transferInfo.getToAccountId());
+
+		final double amount = transferInfo.getAmount();
+
+		checkState(fromAccount.getBalance()>=amount, transferInfo.getFromAccountId() +" do not have enough money");
+
+		fromAccount.setBalance(fromAccount.getBalance()-amount);
+		persist(fromAccount);
+
+		toAccount.setBalance(toAccount.getBalance()+amount);
+		persist(toAccount);
+	}
+
+	/**
+	 *Find all the accounts
+	 * @return
+	 */
+	public List<Account> findAll() {
+		return list(namedQuery("com.aprilsulu.account.core.Account.findAll"));
+	}
+
+	@VisibleForTesting
+	Account create(final Account account) {
+		return persist(account);
+	}
+}

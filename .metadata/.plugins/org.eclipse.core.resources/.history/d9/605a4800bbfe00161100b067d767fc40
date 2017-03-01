@@ -1,0 +1,15 @@
+package com.aprilsulu.bank.service;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.aprilsulu.bank.db.AccountDAO;
+
+public class AccountService {
+
+	private final AccountDAO accountDAO;
+
+	public AccountResource(final AccountDAO accountDAO) {
+		this.accountDAO = checkNotNull(accountDAO);
+	}
+
+}

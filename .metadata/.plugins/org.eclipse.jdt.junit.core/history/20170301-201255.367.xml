@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="IntegrationTest" project="bank-example" tests="7" started="7" failures="0" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.bank.IntegrationTest" time="0.49">
+    <testcase name="testGetIndividualAccount" classname="com.aprilsulu.bank.IntegrationTest" time="0.352"/>
+    <testcase name="testTransferNullInfo" classname="com.aprilsulu.bank.IntegrationTest" time="0.008"/>
+    <testcase name="testGetAccounts" classname="com.aprilsulu.bank.IntegrationTest" time="0.027"/>
+    <testcase name="testTransferNotEnoughBalance" classname="com.aprilsulu.bank.IntegrationTest" time="0.016"/>
+    <testcase name="testGetIndividualAccountNotFound" classname="com.aprilsulu.bank.IntegrationTest" time="0.011"/>
+    <testcase name="testTransferIdNotFound" classname="com.aprilsulu.bank.IntegrationTest" time="0.018"/>
+    <testcase name="testTransfer" classname="com.aprilsulu.bank.IntegrationTest" time="0.058"/>
+  </testsuite>
+</testrun>

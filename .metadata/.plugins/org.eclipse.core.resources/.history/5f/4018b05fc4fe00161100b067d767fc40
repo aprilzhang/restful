@@ -1,0 +1,86 @@
+package com.aprilsulu.bank.resources;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.hibernate.HibernateException;
+
+import com.aprilsulu.account.core.Account;
+import com.aprilsulu.account.core.TransferInfo;
+import com.aprilsulu.bank.db.AccountDAO;
+
+import io.dropwizard.hibernate.UnitOfWork;
+
+@Path("/accounts")
+public final class AccountResource {
+
+	private final AccountDAO accountDAO;
+
+	public AccountResource(final AccountDAO accountDAO) {
+		this.accountDAO = checkNotNull(accountDAO);
+	}
+
+	@GET
+	@UnitOfWork
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Account> listAccount() {
+		return accountDAO.findAll();
+	}
+
+	@GET
+	@Path("/{accountid}")
+	@UnitOfWork
+	@Produces(MediaType.APPLICATION_JSON)
+	public Optional<Account> getAccount(@PathParam("accountid") final int accountid) {
+		return accountDAO.findById(accountid);
+	}
+
+	@POST
+	@Path("/transfer")
+	@UnitOfWork
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response transfer(final TransferInfo transferInfo) {
+
+		if(transferInfo==null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity("Transfer info cannot be null").build();
+		}
+		if(transferInfo.getAmount()<0)
+		{
+			return Response.status(Status.BAD_REQUEST).entity("Transfer amount is negative").build();
+		}
+
+		try
+		{
+			accountDAO.transfer(transferInfo);
+			return Response.ok("Transfer is successful").build();
+		}
+		catch(IllegalStateException | NullPointerException e)
+		{
+			return Response.status(Status.BAD_REQUEST).entity("Failed: "+ e.getMessage()).build();
+		}
+		catch( final HibernateException he)
+		{
+			return Response.serverError().build();
+		}
+	}
+
+	@OPTIONS
+	@Produces(MediaType.APPLICATION_XML)
+	public String getSupportedOperations(){
+		return "<operations>GET, POST</operations>";
+	}
+}

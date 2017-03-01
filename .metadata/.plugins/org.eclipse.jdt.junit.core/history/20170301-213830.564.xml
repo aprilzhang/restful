@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AccountDAOTest (1)" project="account-demo" tests="8" started="8" failures="0" errors="0" ignored="0">
+  <testsuite name="com.aprilsulu.account.db.AccountDAOTest" time="0.4">
+    <testcase name="testTransferWithIdNotFound" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.112"/>
+    <testcase name="testFindAllEmpty" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.131"/>
+    <testcase name="testCreateAccount" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.032"/>
+    <testcase name="testFindAll" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.031"/>
+    <testcase name="testFindById" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.032"/>
+    <testcase name="testFindByIdNotFound" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.031"/>
+    <testcase name="testTransferWithNotEnoughBalance" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.031"/>
+    <testcase name="testTransfer" classname="com.aprilsulu.account.db.AccountDAOTest" time="0.0"/>
+  </testsuite>
+</testrun>
